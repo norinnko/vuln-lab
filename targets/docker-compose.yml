@@ -1,0 +1,28 @@
+# やられアプリ一式。Target VM 上で `docker compose up -d` で起動する。
+# いずれも学習用に意図的に脆弱なアプリ。隔離ネットワークでのみ使用すること。
+services:
+  # DVWA: 定番のやられアプリ。難易度 Low/Medium/High を切り替えて学べる。
+  # 初期ログイン admin / password → Setup から DB を作成 → Security レベルを設定。
+  dvwa:
+    image: ghcr.io/digininja/dvwa:latest
+    container_name: dvwa
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # OWASP Juice Shop: モダンな JS 製。スコアボードで進捗がゲーム化されている。
+  juiceshop:
+    image: bkimminich/juice-shop:latest
+    container_name: juiceshop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  # （任意）WebGoat: 解説付きで脆弱性を1つずつ学べる教材型。使うならコメントを外す。
+  # webgoat:
+  #   image: webgoat/webgoat:latest
+  #   container_name: webgoat
+  #   ports:
+  #     - "8081:8080"
+  #     - "9090:9090"
+  #   restart: unless-stopped
